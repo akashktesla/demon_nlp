@@ -45,13 +45,13 @@ class Asn():
 
 
 
-def extract_dependecy(text):
+def extract_dependency(text):
     doc = nlp(text)
     returns = {}
     action = set()
     for sent in doc.sents:
         for token in sent:
-            print(f"token: {token},pos:{token.pos_}")
+            # print(f"token: {token},pos:{token.pos_}")
             head = token.head
             head_pos = head.pos_
             try:
@@ -79,17 +79,31 @@ def extract_dependecy(text):
 
     return returns
 
-# Example sentence
-sentence = "clouds floated above the sky"
-extract_dependecy(sentence)
+def svo(text):
+    verb = []
+    noun = []
+    doc = nlp(text)
+    for sent in doc.sents:
+        for token in sent:
+            pos = token.pos_
+            if pos in ["VERB","ROOT","AUX"]:
+                verb.append(token)
+            elif pos in ["NOUN"]:
+                noun.append(token)
+        print(f"verb: {verb}")
+        print(f"noun: {noun}")
 
 
 
-# sentence = convert_to_lemma(sentence)
-# result = extract_subject_object_verb(sentence)
-# print(result)
 
+def main():
+    sentence = "clouds floated above the sky"
+    extract_dependency(sentence)
+    svo(sentence)
+    # sentence = convert_to_lemma(sentence)
+    # result = extract_subject_object_verb(sentence)
+    # print(result)
 
-
-
+if __name__=="__main__":
+    main()
 
