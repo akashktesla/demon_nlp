@@ -47,37 +47,29 @@ class Asn():
 
 def extract_dependency(text):
     doc = nlp(text)
-    returns = {}
+    head_map = {}
+    tail_map = {}
     action = set()
     for sent in doc.sents:
         for token in sent:
-            # print(f"token: {token},pos:{token.pos_}")
+            print(f"token: {token},pos:{token.pos_}")
             head = token.head
+            tail_map[token] = head
             head_pos = head.pos_
             try:
                 if str(head) != token.text:
-                    returns[head].append(token)
+                    head_map[head].append(token)
                     if str(head_pos)=="VERB" or str(head_pos)=="ROOT" or str(head_pos)=="AUX":
                         action.add(head)
             except:
                 if str(head) != token.text:
-                    returns[head] = [token]
+                    head_map[head] = [token]
                     if str(head_pos)=="VERB" or str(head_pos)=="ROOT" or str(head_pos)=="AUX":
                         action.add(head)
-
-    print(returns)
-    for i in returns:
-        print(returns[i])
-        for j in returns[i]:
-            print(j,j.pos_)
     print(f"action list: {action}")
-    asn_list = []
-    for i in action:
-            for j in returns[i]:
-                print(j)
-            # asn_list.append(Asn(i,sub,obj))
+    print(f"head map: {head_map}")
+    print(f"tail_map: {tail_map}")
 
-    return returns
 
 def svo(text):
     verb = []
@@ -97,7 +89,16 @@ def svo(text):
 
 
 def main():
-    sentence = "clouds floated above the sky"
+    # sentence = "clouds floated above the sky"
+    # sentence = "Sparkling stars danced across the velvet night sky"
+    # sentence = "The aroma of freshly baked bread filled the cozy kitchen."
+    # sentence = "The curious cat explored the garden, chasing after fluttering butterflies."
+    # sentence = "The book is in the shelf"
+    # sentence = "After a long day at work, Akash enjoyed a relaxing evening by experimenting with AI in Python."
+    # sentence = "Rust's efficient memory management makes it a powerful choice for developing robust software applications."
+    # sentence = "Under the starlit sky, the campfire crackled, warming the chilly night."
+    sentence = "With a map in hand, they ventured into the dense forest, eager for an adventure."
+
     extract_dependency(sentence)
     svo(sentence)
     # sentence = convert_to_lemma(sentence)
