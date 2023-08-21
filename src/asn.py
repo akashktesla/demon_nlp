@@ -58,17 +58,47 @@ def extract_dependency(text):
             head_pos = head.pos_
             try:
                 if str(head) != token.text:
-                    head_map[head].append(token)
+                    head_map[str(head.text)].append(token.text)
                     if str(head_pos)=="VERB" or str(head_pos)=="ROOT" or str(head_pos)=="AUX":
-                        action.add(head)
+                        action.add(head.text)
             except:
                 if str(head) != token.text:
-                    head_map[head] = [token]
+                    head_map[str(head.text)] = [token.text]
                     if str(head_pos)=="VERB" or str(head_pos)=="ROOT" or str(head_pos)=="AUX":
-                        action.add(head)
-    print(f"action list: {action}")
+                        action.add(head.text)
+    # print(f"action list: {action}")
     print(f"head map: {head_map}")
-    print(f"tail_map: {tail_map}")
+    # print(f"tail_map: {tail_map}")
+    for i in head_map:
+        print(return_arn(i,head_map))
+    # print(head_map["eager"])
+    # for i in head_map:
+    #     print(f"key: {i}")
+    #     print(f"value: {head_map[i]}")
+
+
+
+def return_arn(func,head_map):
+    # print("return_arn initialized")
+    param = head_map[func]
+    try: 
+        a = return_arn(param[0],head_map)
+    except:
+        a = param[0]
+
+    for i in param[1:]:
+        # if not i in [",","."]:
+            # print(f"i: {i}")
+            try:
+                b = return_arn(i,head_map)
+                # print(f"bla: {head_map[i]}")
+                # print(f"b: {b}")
+                a = f"{a}, {b}"
+            except: 
+                a = f"{a}, {i}"
+    return f"{func}({a})"
+
+
 
 
 def svo(text):
@@ -97,7 +127,8 @@ def main():
     # sentence = "After a long day at work, Akash enjoyed a relaxing evening by experimenting with AI in Python."
     # sentence = "Rust's efficient memory management makes it a powerful choice for developing robust software applications."
     # sentence = "Under the starlit sky, the campfire crackled, warming the chilly night."
-    sentence = "With a map in hand, they ventured into the dense forest, eager for an adventure."
+    # sentence = "With a map in hand, they ventured into the dense forest, eager for an adventure."
+    sentence = "I love red apples,coffee shop,juicy oranges"
 
     extract_dependency(sentence)
     svo(sentence)
