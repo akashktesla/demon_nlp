@@ -1,4 +1,5 @@
 x,y
-"*(1,4)","operator,bracket,number,comma,number,bracket"
-"+(a,b)","operator,bracket,variable,comma,variable,bracket"
-"+(1,2,3,a)","operator,bracket,number,comma,number,comma, number,comma,variable,bracket"
+"* ( 1, 4 )","operator,bracket,number,comma,number,bracket"
+"+ ( a, b )","operator,bracket,variable,comma,variable,bracket"
+"+ ( 1, 2, 3, a )","operator,bracket,number,comma,number,comma, number,comma,variable,bracket"
+"- ( a, 7 )","operator,bracket,variable,comma,number,bracket"

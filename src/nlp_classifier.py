@@ -1,19 +1,17 @@
-#import
-import spacy
-#load the model
-nlp = spacy.load("en_core_web_md")
-text = "+(a,b)"
-doc = nlp(text)
-x = []
-for token in doc:
-    x.append(token.vector)
-
-y = ["operator","bracket","variable","comma","variable","bracket"]
-# 0-operator, 1-variable, 2-bracket, 3-comma
-# y = [0,2,1,3,1,2]
-
 #classifier
 from sklearn.svm import SVC
+import pandas as pd
+import ast
+
+
+#importing data
+df = pd.read_csv("dataset/math_dataset_proc.csv")
+x = df['x'].apply(ast.literal_eval).to_numpy()
+y = df['y'].to_numpy()
+
+print(x)
+print(y)
+
 
 classifier = SVC(kernel = "rbf")
 classifier.fit(x,y)
