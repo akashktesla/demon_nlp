@@ -4,23 +4,21 @@ import spacy
 nlp = spacy.load("en_core_web_md")
 text = "+(a,b)"
 doc = nlp(text)
-x = {}
-x1 = []
+x = []
 for token in doc:
-    # print(token.text, token.vector)
-    x[token.text] = token.vector
-    x1.append(token.vector)
+    x.append(token.vector)
 
-# print(f"x: {len(x1)}")
-y = [0,1,2,1,2,1]
+y = ["operator","bracket","variable","comma","variable","bracket"]
+# 0-operator, 1-variable, 2-bracket, 3-comma
+# y = [0,2,1,3,1,2]
 
 #classifier
 from sklearn.svm import SVC
 
 classifier = SVC(kernel = "rbf")
-classifier.fit(x1,y)
+classifier.fit(x,y)
 
-text = "+( a,b)"
+text = "+( c, b )"
 doc = nlp(text)
 for token in doc:
     print(token.text,classifier.predict([token.vector]))
