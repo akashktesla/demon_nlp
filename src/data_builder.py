@@ -6,7 +6,7 @@ nlp = spacy.load("en_core_web_md")
 
 #load a csv file
 df = pd.read_csv("dataset/math_dataset.csv")
-x_temp = df["x"].apply(ast.literal_eval).to_numpy()
+x_temp = df["x"].to_numpy()
 y_temp = df["y"].to_numpy()
 
 x = []
