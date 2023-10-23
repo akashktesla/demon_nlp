@@ -74,7 +74,7 @@ def predict_clf(path, text):
     returns = []
     for token in doc:
         # print(token.text,clf.predict([token.vector]))
-        returns.append(clf.predict([token.vector]))
+        returns.append(clf.predict([token.vector])[0])
     return returns
 
 
