@@ -68,6 +68,16 @@ def test_clf_model(path):
     for token in doc:
         print(token.text,clf.predict([token.vector]))
 
+def predict_clf(path, text):
+    clf = load(path)
+    doc = nlp(text)
+    returns = []
+    for token in doc:
+        print(token.text,clf.predict([token.vector]))
+        returns.append(clf.predict([token.vector]))
+    return returns
+
+
 
 
 if __name__ =="__main__":

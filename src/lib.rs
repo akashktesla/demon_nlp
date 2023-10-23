@@ -4,10 +4,6 @@ use pyo3::prelude::PyModule;
 use pyo3::types::{PyTuple, PyList};
 use pyo3::prelude::*;
 
-fn main(){
-    predict(&String::from("/home/aki/projects/projectD/demon_nlp/src/models/math_classifier.joblib"), &String::from("*( 12, a )"))
-}
-
 pub fn predict(path:&String,text:&String){
     let asn_code = include_str!("/home/aki/projects/projectD/demon_nlp/src/nlp_classifier.py");
 
@@ -19,8 +15,3 @@ pub fn predict(path:&String,text:&String){
     });
 
 }
-
-
-
-
-
