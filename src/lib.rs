@@ -11,7 +11,9 @@ pub fn predict(path:&String,text:&String){
 
         let nlp_clf = PyModule::from_code(py, asn_code, "", "").unwrap();
         let args = PyTuple::new(py, &[path,text]);
-        nlp_clf.getattr("predict_clf").unwrap().call1(args).unwrap();
+        let r = nlp_clf.getattr("predict_clf").unwrap().call1(args).unwrap();
+        let returns:Vec<Vec<String>> = r.extract().unwrap();
+        println!("{:?}",returns);
     });
 
 }
