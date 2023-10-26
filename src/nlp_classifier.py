@@ -7,11 +7,11 @@ nlp = spacy.load("en_core_web_md")
 
 def main():
     #return classifier by training the model
-    # clf = train_clf_model()
+    clf = train_clf_model()
     #save data
-    # dump(clf,'models/math_classifier.joblib')
+    dump(clf,'models/math_classifier.joblib')
 
-    test_clf_model('models/math_classifier.joblib')
+    # test_clf_model('models/math_classifier.joblib')
 
 def build_data(path):
     #load a csv file
