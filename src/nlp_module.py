@@ -22,6 +22,5 @@ def to_graph(text,nlp):
     for token in doc:
         print(f"Token: {token.text}, Dependency: {token.dep_}, Head: {token.head.text}")
 
-if __name__ == "__main__":
-    main()
+if __name__ == "__main__": main()
 
