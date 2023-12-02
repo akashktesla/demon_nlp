@@ -17,6 +17,7 @@ def main():
 
 class Node():
     def __init__(self):
+        # self.tail = []
         pass
 
 def to_graph(text,nlp):
@@ -25,6 +26,9 @@ def to_graph(text,nlp):
     node_list = []
     node_map = {}
     token_node_map = {}
+    node_feature_matrix = []
+    edge_index = [[],[]]
+    edge_feature_matrix = []
     node_id = 1
     #initializing node
     for token in doc:
@@ -40,17 +44,28 @@ def to_graph(text,nlp):
         node = token_node_map[token]
         try:
             head_node.tail.append((node.id,token.dep_)) 
+            node_feature_matrix.append(token.text)
+            edge_index[0].append(head_node.id)
+            edge_index[1].append(node.id)
+            edge_feature_matrix.append(token.dep_)
         except:
-            node.tail = [(node.id,token.dep_)]
+            head_node.tail = [(node.id,token.dep_)]
+            node_feature_matrix.append(token.text)
+            edge_index[0].append(head_node.id)
+            edge_index[1].append(node.id)
+            edge_feature_matrix.append(token.dep_)
 
-    print(f"token_map: {token_map}")
-    print(f"token_node_map: {token_node_map}")
-    for i in node_map:
-        node = node_map[i]
-        try:
-            print(i,node.text,node.id,node.tail)
-        except:
-            pass
+    # print(f"token_map: {token_map}")
+    # print(f"token_node_map: {token_node_map}")
+    # for i in node_map:
+    #     node = node_map[i]
+    #     try:
+    #         print(f"id:{node.id}, text: {node.text}, tail: {node.tail}")
+    #     except:
+    #         pass
+    print(f"node_feture_matrix: {node_feature_matrix}")
+    print(f"edge_index: {edge_index}")
+    print(f"edge_feature_matrix: {edge_feature_matrix}")
 
 
 
