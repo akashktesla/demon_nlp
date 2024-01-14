@@ -1,16 +1,29 @@
+import torch
 import spacy
 import numpy as np
 from spacy import displacy
+from torch_geometric.nn import GCNConv,GraphConv
+
+
 
 def main():
     nlp = spacy.load("en_core_web_trf")
     text = "Akash is a god because Akash is Akash"
     # text = "Your input text goes here."
     doc = nlp(text)
-    graph = to_graph(text,nlp)
+    node_feature_matrix, edge_index, edge_feature_matrix = to_graph(text,nlp)
+    print(f"node_feture_matrix: {node_feature_matrix}")
+    print(f"edge_index: {edge_index}")
+    print(f"edge_feature_matrix: {edge_feature_matrix}")
+    
+    conv1 = GCNConv(1,32)
+    conv2 = GCNConv(32,16)
+    
+    print(conv1(torch.tensor([0.2,0.4,0.3]),torch.tensor([[1,3],[2,1]])))
+
+
     
     # Generate the dependency graph
-    
     # options = {"compact": True, "color": "blue", "bg": "white", "font": "Source Sans Pro"}
     # displacy.serve(doc, style="dep", options=options)
 
@@ -47,13 +60,13 @@ def to_graph(text,nlp):
             node_feature_matrix.append(token.text)
             edge_index[0].append(head_node.id)
             edge_index[1].append(node.id)
-            edge_feature_matrix.append(token.dep_)
+            edge_feature_matrix.append([token.dep_])
         except:
             head_node.tail = [(node.id,token.dep_)]
             node_feature_matrix.append(token.text)
             edge_index[0].append(head_node.id)
             edge_index[1].append(node.id)
-            edge_feature_matrix.append(token.dep_)
+            edge_feature_matrix.append([token.dep_])
 
     # print(f"token_map: {token_map}")
     # print(f"token_node_map: {token_node_map}")
@@ -63,9 +76,8 @@ def to_graph(text,nlp):
     #         print(f"id:{node.id}, text: {node.text}, tail: {node.tail}")
     #     except:
     #         pass
-    print(f"node_feture_matrix: {node_feature_matrix}")
-    print(f"edge_index: {edge_index}")
-    print(f"edge_feature_matrix: {edge_feature_matrix}")
+
+    return node_feature_matrix,edge_index,edge_feature_matrix
 
 
 
