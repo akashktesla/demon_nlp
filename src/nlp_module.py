@@ -1,4 +1,5 @@
 import torch
+import torch.nn.functional as F
 import spacy
 import numpy as np
 from spacy import displacy
@@ -16,10 +17,15 @@ def main():
     print(f"edge_index: {edge_index}")
     print(f"edge_feature_matrix: {edge_feature_matrix}")
     
-    conv1 = GCNConv(1,32)
+    conv1 = GCNConv(2,32)
     conv2 = GCNConv(32,16)
-    
-    print(conv1(torch.tensor([0.2,0.4,0.3]),torch.tensor([[1,3],[2,1]])))
+    x = torch.tensor([[0.1, 0.4], [0.8, 0.2], [0.5, 0.5],[0.4,0.7]])
+    edge_index = torch.tensor([[0, 1, 1, 2, 2], [1, 0, 2, 1, 3]])
+
+    temp = conv1(x,edge_index)
+    print(temp)
+    print(F.tanh(temp))
+    print(len(temp))
 
 
     
