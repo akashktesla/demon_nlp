@@ -27,7 +27,6 @@ def main():
     print(F.tanh(temp))
     print(len(temp))
 
-
     
     # Generate the dependency graph
     # options = {"compact": True, "color": "blue", "bg": "white", "font": "Source Sans Pro"}
