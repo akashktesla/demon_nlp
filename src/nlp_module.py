@@ -9,7 +9,7 @@ from torch_geometric.nn import GCNConv,GraphConv
 
 def main():
     nlp = spacy.load("en_core_web_trf")
-    text = "Akash is a god because Akash is Akash"
+    text = "Life is meaningless"
     # text = "Your input text goes here."
     doc = nlp(text)
     node_feature_matrix, edge_index, edge_feature_matrix = to_graph(text,nlp)
